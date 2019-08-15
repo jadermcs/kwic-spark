@@ -50,7 +50,6 @@ object WordShift {
     val (l1, l2) = l.splitAt(1)
     val r1 = r ++ l1
 
-    val diff =
     if(l2.mkString(" ").length < (target - 5)) {
       return l2 ++ r1
     }
