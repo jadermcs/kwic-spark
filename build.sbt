@@ -3,7 +3,7 @@ scalaVersion := "2.11.10"
 name := "kwic"
 version := "0.0.1"
 
-val sparkVersion = "2.3.0"
+val sparkVersion = "2.1.0"
 
 
 resolvers ++= Seq(

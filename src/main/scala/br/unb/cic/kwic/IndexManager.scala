@@ -2,9 +2,11 @@ package br.unb.cic.kwic
 
 import org.apache.spark.rdd._
 
-object IndexManager {
 
-  def process(lines: RDD[String]): RDD[(String, List[String])] =
+object IndexManager {
+  type TMatch = (String, List[String])
+
+  def process(lines: RDD[String]): RDD[TMatch] =
     lines.flatMap { l =>
       val words = l.split(' ').toList
       val indexes = (1 to words.length).map(p => (words, p-1))
@@ -15,10 +17,9 @@ object IndexManager {
       }
     }.reduceByKey((x: List[String], y: List[String]) => x++y)
 
-  def occurrencesOfWord(word: String,
-    indexmap: RDD[(String, List[String])]): List[String] =
+  def occurrencesOfWord(word: String, indexmap: RDD[TMatch]): List[String] =
     indexmap.lookup(word).head
 
-  def sortedWords(indexmap: RDD[(String, List[String])]): List[String] =
+  def sortedWords(indexmap: RDD[TMatch]): List[String] =
     indexmap.keys.collect.toList.sorted
 }

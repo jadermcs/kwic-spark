@@ -11,10 +11,8 @@ object WordShift {
    */
   def shift(words: List[String], pos: Int, target: Int) : List[String] = {
     val (l, r) = words.splitAt(pos)
-    if(l.mkString(" ").length < (target -5)) {
-      return shiftRight(l, r, target)
-    }
-    return shiftLeft(l, r, target)
+    if (l.mkString(" ").length < (target -5)) shiftRight(l, r, target)
+    else shiftLeft(l, r, target)
   }
 
   /*
@@ -23,16 +21,12 @@ object WordShift {
    *of the first list is "smaller enough" than the target parameter.
    */
   private def shiftRight(l : List[String], r : List[String], target : Int) : List[String] = {
-    if(r.length == 0) {
-      return l
-    }
+    if (r.length == 0) return l
 
     val (r1, r2) = r.splitAt(r.length-1)
     val l1 = r2 ++ l
 
-    if(l1.mkString(" ").length > (target - 5)) {
-      return l ++ r
-    }
+    if(l1.mkString(" ").length > (target - 5)) return l ++ r
 
     return shiftRight(l1, r1, target)
   }
@@ -43,16 +37,12 @@ object WordShift {
    *of the first list is "smaller enough" than the target parameter.
    */
   private def shiftLeft(l : List[String], r : List[String], target : Int) : List[String]= {
-    if(l.length == 0) {
-      return r
-    }
+    if(l.length == 0) return r
 
     val (l1, l2) = l.splitAt(1)
     val r1 = r ++ l1
 
-    if(l2.mkString(" ").length < (target - 5)) {
-      return l2 ++ r1
-    }
+    if(l2.mkString(" ").length < (target - 5)) return l2 ++ r1
 
     return shiftLeft(l2, r1, target)
   }
